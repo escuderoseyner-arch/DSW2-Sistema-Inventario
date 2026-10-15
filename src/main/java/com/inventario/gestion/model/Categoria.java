@@ -1,7 +1,11 @@
 package com.inventario.gestion.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "categoria")
@@ -21,4 +25,8 @@ public class Categoria {
 
     @Column(length = 200)
     private String descripcion;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Producto> productos;
 }
