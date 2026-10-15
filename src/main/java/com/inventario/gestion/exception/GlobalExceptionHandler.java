@@ -3,6 +3,7 @@ package com.inventario.gestion.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,6 +28,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ReglaNegocioException.class)
     public ResponseEntity<Map<String, Object>> reglaNegocio(ReglaNegocioException e) {
         return respuesta(HttpStatus.CONFLICT, e.getMessage(), null);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> loginFallido(AuthenticationException e) {
+        return respuesta(HttpStatus.UNAUTHORIZED, "Usuario o contrasena incorrectos", null);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
