@@ -10,11 +10,12 @@ import java.math.BigDecimal;
 
 /**
  * Datos que llegan en el POST y PUT de /api/productos.
+ * El stock solo se usa al registrar; en el PUT se ignora.
  */
 public record ProductoRequest(
 
         @NotBlank(message = "El nombre es obligatorio")
-        @Size(max = 200, message = "El nombre no puede tener mas de 200 caracteres")
+        @Size(max = 100, message = "El nombre no puede tener mas de 100 caracteres")
         String nombre,
 
         @Size(max = 200, message = "La descripcion no puede tener mas de 200 caracteres")
@@ -23,7 +24,6 @@ public record ProductoRequest(
         @NotNull(message = "El precio es obligatorio")
         @Positive(message = "El precio debe ser mayor que 0")
         BigDecimal precio,
-
 
         @PositiveOrZero(message = "El stock debe ser mayor o igual que 0")
         Integer stock,
