@@ -17,6 +17,58 @@
   ],
   "item": [
     {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (guarda el token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.token) { pm.collectionVariables.set('token', r.token); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario\": \"admin\",\n  \"password\": \"admin123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Categoria",
       "item": [
         {
@@ -24,17 +76,29 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Electronica\",\n  \"descripcion\": \"Productos electronicos\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/api/categorias",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "categorias"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias"
+              ]
             }
           }
         },
@@ -45,8 +109,13 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/categorias",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "categorias"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categorias"
+              ]
             }
           }
         }
@@ -62,8 +131,13 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/productos",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "productos"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ]
             }
           }
         },
@@ -72,17 +146,29 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Monitor LG 24\",\n  \"descripcion\": \"Monitor LED Full HD\",\n  \"precio\": 850.50,\n  \"stock\": 10,\n  \"stockMinimo\": 2,\n  \"idCategoria\": 1\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/api/productos",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "productos"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ]
             }
           }
         },
@@ -93,8 +179,14 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/productos/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "productos", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "1"
+              ]
             }
           }
         },
@@ -105,8 +197,15 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/productos/categoria/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "productos", "categoria", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "categoria",
+                "1"
+              ]
             }
           }
         },
@@ -116,17 +215,30 @@
             "description": "OJO: el PUT no modifica el stock (solo se define al registrar). Este cuerpo manda stock=5 pero se ignora a proposito.",
             "method": "PUT",
             "header": [
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Monitor LG 27\",\n  \"descripcion\": \"Ahora de 27 pulgadas\",\n  \"precio\": 990.00,\n  \"stock\": 5,\n  \"stockMinimo\": 3,\n  \"idCategoria\": 1\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/api/productos/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "productos", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "1"
+              ]
             }
           }
         },
@@ -137,8 +249,14 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/productos/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "productos", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "1"
+              ]
             }
           }
         }
@@ -151,12 +269,7 @@
           "name": "Consultar Existencias",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/inventario",
               "host": [
@@ -173,12 +286,7 @@
           "name": "Inventario De Un Producto",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/inventario/producto/1",
               "host": [
@@ -197,12 +305,7 @@
           "name": "Listar Stock Bajo",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/inventario/stock-bajo",
               "host": [
@@ -229,10 +332,6 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
               }
             ],
             "url": {
@@ -265,10 +364,6 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
               }
             ],
             "url": {
@@ -297,12 +392,7 @@
           "name": "Listar Movimientos",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/movimientos",
               "host": [
@@ -319,12 +409,7 @@
           "name": "Buscar Movimiento Segun Id",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/movimientos/1",
               "host": [
@@ -342,12 +427,7 @@
           "name": "Movimientos De Un Producto",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/movimientos/producto/1",
               "host": [
@@ -364,5 +444,15 @@
         }
       ]
     }
-  ]
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  }
 }
