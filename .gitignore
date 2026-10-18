@@ -12,7 +12,13 @@ out/
 .vscode/
 .DS_Store
 
-# Secretos
+# Secretos y archivos de entorno
 .env
 *.env
+.env.*
+!.env.example
 application-local.properties
+
+# Claves y certificados privados
+*.pem
+*.key
