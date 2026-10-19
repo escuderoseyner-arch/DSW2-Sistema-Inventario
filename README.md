@@ -118,3 +118,98 @@ Para ejecutarlas: `mvn test`. Resultado actual: 35 pruebas, 0 fallos (14 son del
 1. Ejecutar `POST /api/auth/login` y copiar el valor de `token` en la variable `token` de la colección.
 2. Crear una categoría y un producto (carpetas "Categoria" y "Productos").
 3. Usar las carpetas "Movimientos" e "Inventario" cambiando el `idProducto` por el del producto creado.
+
+
+## Ejecución local con Docker
+
+### Requisitos
+
+- Docker Desktop instalado y en ejecución.
+- Docker Compose disponible mediante `docker compose`.
+- Git para clonar el repositorio.
+
+### Configuración de variables de entorno
+
+En la raíz del proyecto, crea un archivo `.env` a partir de la plantilla `.env.example`.
+
+En Windows PowerShell, ejecuta:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Edita el archivo `.env` y reemplaza los valores de ejemplo por credenciales propias:
+
+```dotenv
+DB_USER=postgres
+DB_PASSWORD='CAMBIAR_POR_UNA_CONTRASENA_SEGURA'
+JWT_SECRET='CAMBIAR_POR_UN_SECRETO_LARGO_Y_ALEATORIO'
+ADMIN_PASSWORD='CAMBIAR_POR_UNA_CONTRASENA_DE_ADMINISTRADOR'
+```
+
+**Importante:**
+
+- Utiliza contraseñas seguras y un secreto JWT largo y aleatorio.
+- Las comillas simples permiten que Docker Compose interprete literalmente los valores que contienen caracteres como `$`.
+- El archivo `.env` contiene credenciales reales y no debe subirse a GitHub.
+- El archivo `.env.example` es una plantilla y no contiene secretos reales.
+
+### Construcción y ejecución
+
+Desde la carpeta raíz del proyecto, ejecuta:
+
+```powershell
+docker compose config --quiet
+docker compose up --build -d
+```
+
+El primer comando valida la configuración de Docker Compose. El segundo construye la imagen de la API e inicia los contenedores de la aplicación y PostgreSQL.
+
+Para comprobar el estado de los contenedores:
+
+```powershell
+docker compose ps
+```
+
+Para consultar los registros de la API:
+
+```powershell
+docker compose logs -f api
+```
+
+La API estará disponible localmente en:
+
+`http://localhost:8080`
+
+PostgreSQL utiliza un volumen persistente para conservar los datos cuando se detienen o recrean los contenedores.
+
+### Detener los servicios
+
+Para detener los contenedores sin eliminarlos:
+
+```powershell
+docker compose stop
+```
+
+Para detener los servicios y eliminar los contenedores y la red del proyecto, conservando el volumen de PostgreSQL:
+
+```powershell
+docker compose down
+```
+
+**Advertencia:** el comando `docker compose down -v` también elimina el volumen de PostgreSQL y los datos almacenados en él. No lo utilices si necesitas conservar la base de datos.
+
+### Pruebas de la API
+
+Utiliza Postman para probar el inicio de sesión y los endpoints de categorías, productos, inventario y movimientos.
+
+1. Ejecuta `POST /api/auth/login` para obtener el token JWT.
+2. Envía el token en las peticiones protegidas mediante `Authorization: Bearer <token>`.
+3. Crea una categoría y un producto para realizar las pruebas de inventario.
+4. Comprueba las entradas, salidas y validaciones de stock mediante los endpoints documentados anteriormente en este README.
+
+Para ejecutar las pruebas automatizadas del proyecto:
+
+```powershell
+mvn test
+```
